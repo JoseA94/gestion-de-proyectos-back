@@ -9,10 +9,21 @@ const tiposUsuario = gql`
     correo: String!
     rol: Enum_Rol!
     estado: Enum_EstadoUsuario
+    inscripciones: [Inscripcion]
+    avancesCreados: [Avance]
+    proyectosLiderados: [Proyecto]
+  }
+
+  input FiltroUsuarios {
+    _id: ID
+    identificacion: String
+    correo: String
+    rol: Enum_Rol
+    estado: Enum_EstadoUsuario
   }
 
   type Query {
-    Usuarios: [Usuario]
+    Usuarios(filtro: FiltroUsuarios): [Usuario]
     Usuario(_id: String!): Usuario
   }
 
@@ -24,6 +35,7 @@ const tiposUsuario = gql`
       correo: String!
       rol: Enum_Rol!
       estado: Enum_EstadoUsuario
+      password: String!
     ): Usuario
 
     editarUsuario(
@@ -32,8 +44,7 @@ const tiposUsuario = gql`
       apellido: String!
       identificacion: String!
       correo: String!
-      rol: Enum_Rol!
-      estado: Enum_EstadoUsuario
+      estado: Enum_EstadoUsuario!
     ): Usuario
 
     eliminarUsuario(_id: String, correo: String): Usuario
